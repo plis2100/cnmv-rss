@@ -1,0 +1,412 @@
+<!doctype html><html><head><meta charset='utf-8'><style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:24px;line-height:1.25}
+    h1{font-size:20px;margin:0 0 8px 0}
+    .meta{color:#555;margin-bottom:10px}
+    .card{border-top:1px solid #ddd;padding:12px 0}
+    .issuer{font-weight:bold;margin-top:4px}
+    a{color:#b1002a;text-decoration:none}
+    a:hover{text-decoration:underline}
+    table{border-collapse:collapse;margin-top:8px;font-size:13px;width:100%}
+    th,td{border:1px solid #ddd;padding:6px 8px}
+    th{background:#f5f5f5;text-align:left}
+    td.num{text-align:right}
+    .small{font-size:12px;color:#666}
+    .warn{color:#b1002a;font-size:12px}
+
+    /* ROJO = datos en fechas pedidas (keep_dates) */
+    .hotrow td{color:#d00000 !important;font-weight:700}
+    .hotrow a{color:#d00000 !important;font-weight:700}
+
+    /* VERDE = datos de la última fecha buscada (sobrescribe) */
+    .latestrow td{color:#138a08 !important;font-weight:700}
+    .latestrow a{color:#138a08 !important;font-weight:700}
+
+    /* Bloques de texto PDF (detalle PS) */
+    details.pdfbox{margin:8px 0 0 0}
+    details.pdfbox summary{cursor:pointer;color:#333}
+    pre.pdftxt{white-space:pre-wrap;word-wrap:break-word;background:#fafafa;border:1px solid #eee;padding:10px;border-radius:6px;max-height:420px;overflow:auto}
+    .trunc{color:#b1002a;font-size:12px;margin-top:4px}
+
+    /* fila auxiliar para "Anterior (PDF)" en gris */
+    .prevrow td{color:#666 !important;font-style:italic}
+    </style></head><body>
+<h1>CNMV · PS (HTML) + Autocartera (HTML) · últimos días (según BusquedaUltimosDias)</h1>
+<div class='meta'>Fuente: <a href='https://www.cnmv.es/portal/consultas/busquedaultimosdias?idPerfil=2&amp;tipo=1&amp;lang=es' target='_blank' rel='noopener'>BusquedaUltimosDias</a> · Ventana: <b>08/02/2020</b> → <b>11/09/2026</b> · Última fecha búsqueda: <span style='color:#138a08;font-weight:700'>11/09/2026</span> · Emisores: <b>28</b></div>
+<div class='small'><b>Emisores por fecha del listado</b></div>
+<div class='small' style='color:#138a08;font-weight:700'>11/09/2026: <b>6</b></div>
+<div class='small' style='color:#d00000;font-weight:700'>10/09/2026: <b>8</b></div>
+<div class='small' style='color:#d00000;font-weight:700'>09/09/2026: <b>5</b></div>
+<div class='small' style='color:#d00000;font-weight:700'>08/09/2026: <b>9</b></div>
+<div style='margin-top:10px'><b>Listado de empresas por fecha</b></div>
+<div class='small' style='margin-top:6px;color:#138a08;font-weight:700'><b>11/09/2026</b> (6)</div>
+<ul style='margin-top:4px'>
+<li class='small'>ACERINOX, S.A.</li>
+<li class='small'>EDREAMS ODIGEO, S.A.</li>
+<li class='small'>INDRA SISTEMAS, S.A.</li>
+<li class='small'>INMOBILIARIA DEL SUR, S.A.</li>
+<li class='small'>NEINOR HOMES, S.A.</li>
+<li class='small'>SACYR, S.A.</li>
+</ul>
+<div class='small' style='margin-top:6px;color:#d00000;font-weight:700'><b>10/09/2026</b> (8)</div>
+<ul style='margin-top:4px'>
+<li class='small'>EDREAMS ODIGEO, S.A.</li>
+<li class='small'>FLUIDRA, S.A.</li>
+<li class='small'>LOGISTA INTEGRAL, S.A.</li>
+<li class='small'>OBRASCON HUARTE LAIN, S.A.</li>
+<li class='small'>SACYR, S.A.</li>
+<li class='small'>SOLARIA ENERGIA Y MEDIOAMBIENTE, S.A.</li>
+<li class='small'>TECNICAS REUNIDAS, S.A.</li>
+<li class='small'>TELEFONICA, S.A.</li>
+</ul>
+<div class='small' style='margin-top:6px;color:#d00000;font-weight:700'><b>09/09/2026</b> (5)</div>
+<ul style='margin-top:4px'>
+<li class='small'>ACERINOX, S.A.</li>
+<li class='small'>EDREAMS ODIGEO, S.A.</li>
+<li class='small'>INDRA SISTEMAS, S.A.</li>
+<li class='small'>INMOBILIARIA DEL SUR, S.A.</li>
+<li class='small'>TECNICAS REUNIDAS, S.A.</li>
+</ul>
+<div class='small' style='margin-top:6px;color:#d00000;font-weight:700'><b>08/09/2026</b> (9)</div>
+<ul style='margin-top:4px'>
+<li class='small'>CELLNEX TELECOM, S.A.</li>
+<li class='small'>EDREAMS ODIGEO, S.A.</li>
+<li class='small'>GRIFOLS, S.A.</li>
+<li class='small'>INMOBILIARIA DEL SUR, S.A.</li>
+<li class='small'>LABORATORIOS FARMACEUTICOS ROVI, S.A.</li>
+<li class='small'>NEINOR HOMES, S.A.</li>
+<li class='small'>OBRASCON HUARTE LAIN, S.A.</li>
+<li class='small'>SACYR, S.A.</li>
+<li class='small'>SOLARIA ENERGIA Y MEDIOAMBIENTE, S.A.</li>
+</ul>
+<div class='card'>
+<div style='color:#138a08;font-weight:700'><b>11/09/2026</b></div>
+<div class='issuer'>SACYR, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-28013811' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='latestrow'><td>1</td><td>THE GOLDMAN SACHS GROUP, INC.</td><td class='num'><b>5,255</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={a5218d6e-4d89-4b01-bd9a-0bca31114252}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>5,245</b></td><td>03/09/2026</td><td></td></tr>
+<tr><td>2</td><td>POINT72 LONDON INVESTMENTS LTD</td><td class='num'><b>2,198</b></td><td>11/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={9c581946-eb0d-48c5-9d44-de0cacfea7f2}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>GRUPO EMPRESARIAL FUERTES, S.L.</td><td class='num'><b>5,930</b></td><td>05/02/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={e57fca59-6f34-4223-b088-dcd48ae8f279}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>LOUREDA MANTIÑAN, JOSE MANUEL</td><td class='num'><b>6,746</b></td><td>01/10/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={64596a41-7a21-428f-9e7e-f3638ca60581}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>PRILOU, S.L.</td><td class='num'><b>6,746</b></td><td>01/10/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={75e24419-228a-4d9f-9c69-5171a36ca57e}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>RUBRIC CAPITAL MANAGEMENT</td><td class='num'><b>4,432</b></td><td>17/01/2023</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={c53e21bc-d88a-4392-91d5-d6c0ba90a96f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>DISA CORPORACION PETROLIFERA, S.A.</td><td class='num'><b>14,598</b></td><td>01/07/2021</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={5cf6e4a2-6ec9-4c64-9432-ed7756b304a3}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>8</td><td>GRUPO CORPORATIVO FUERTES, S.L.</td><td class='num'><b>6,322</b></td><td>14/02/2020</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={c8af977f-e09f-4d70-a689-8ff65988a95f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>1,345</td><td class='num'>0,000</td><td class='num'><b>1,345</b></td><td>27/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={10dab844-a3ad-44ec-a15f-3ee5fe1be36b}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#138a08;font-weight:700'><b>11/09/2026</b></div>
+<div class='issuer'>NEINOR HOMES, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A95786562' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div class='small' style='color:#138a08;font-weight:700'>Resultado encontrado mediante <a href='https://www.cnmv.es/derechosvoto/personasotrasnotificaciones.aspx?qS={0b2f942f-485c-4b02-b2c2-c2d062ee0290}' target='_blank' rel='noopener'>OTRAS NOTIFICACIONES (1)</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr><td>1</td><td>MORGAN STANLEY</td><td class='num'><b>4,853</b></td><td>19/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={6ed4bd6a-2c1c-4980-9e29-504652d6146f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>ORION EUROPEAN REAL ESTATE FUND V, SLP</td><td class='num'><b>28,814</b></td><td>06/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={2233969e-2b72-4bc3-bd32-686a4ffa0de2}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>STONESHIELD HOLDING S.A.R.L.</td><td class='num'><b>18,627</b></td><td>06/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={c728de3e-727f-4f52-8d7d-ab9be94df014}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='latestrow'><td>4</td><td>THE GOLDMAN SACHS GROUP, INC. <span class='small'>(Otras notificaciones)</span></td><td class='num'><b>2,855</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/webservices/verdocumento/ver?e=%2fKNYs%2bvv9YpJ6C9Rm%2bUz%2fLgFVYnOwxcxgjZhyrXRasmY1bLbSDf76rU2Umyew0mw' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>3,016</b></td><td>08/09/2026</td><td></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>1,648</td><td class='num'>0,000</td><td class='num'><b>1,648</b></td><td>30/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={6fc8fc2b-d449-483d-9ae8-502146eb6f88}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#138a08;font-weight:700'><b>11/09/2026</b></div>
+<div class='issuer'>INMOBILIARIA DEL SUR, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-41002205' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='latestrow'><td>1</td><td>HERCALIANZ INVESTING GROUP, S.L.</td><td class='num'><b>9,021</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={cba90787-f5ed-4ea1-ba16-4721bdd04af2}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>9,011</b></td><td>09/09/2026</td><td></td></tr>
+<tr><td>2</td><td>ARRANZ PUMAR, CANDELAS</td><td class='num'><b>3,005</b></td><td>10/03/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={20499cee-d139-4cb9-87f3-be0cf5eb6beb}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>INVERSIONES AGRICOLAS INDUSTRIALES Y COMERCIALES, S.L.</td><td class='num'><b>6,451</b></td><td>01/08/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={b3415dfe-bfc0-4037-bac9-fb76eaa84a23}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>PUMAR MARIÑO, CARMEN</td><td class='num'><b>6,009</b></td><td>22/06/2020</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={c27b4c43-1784-42aa-a524-61934fc5a971}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>PUMAR MARIÑO, GLORIA</td><td class='num'><b>3,434</b></td><td>22/06/2020</td><td></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>2,282</td><td class='num'>0,000</td><td class='num'><b>2,282</b></td><td>03/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={137fce55-d1ec-4615-bf19-ef4e8a2cecab}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#138a08;font-weight:700'><b>11/09/2026</b></div>
+<div class='issuer'>INDRA SISTEMAS, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-28599033' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div class='small' style='color:#138a08;font-weight:700'>Resultado encontrado mediante <a href='https://www.cnmv.es/derechosvoto/personasotrasnotificaciones.aspx?qS={97688b2d-73fb-4493-a792-18ff934b6567}' target='_blank' rel='noopener'>OTRAS NOTIFICACIONES (1)</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr><td>1</td><td>BLACKROCK INC.</td><td class='num'><b>3,538</b></td><td>02/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={4befd390-a80d-4ccc-b35b-f93db7900897}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>T. ROWE PRICE ASSOCIATES, INC</td><td class='num'><b>4,993</b></td><td>10/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={b18048bd-7296-4b70-af82-6e138bbeab22}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>THE GOLDMAN SACHS GROUP, INC.</td><td class='num'><b>7,627</b></td><td>19/06/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={79571193-23c1-44a4-8002-69f5e71b9b9f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>ING GROEP N.V.</td><td class='num'><b>5,581</b></td><td>18/05/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={c4e95875-bdda-48f6-a02c-a93104b2b274}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>SAPA PLACENCIA S.L.</td><td class='num'><b>7,944</b></td><td>19/01/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={8692282b-4f2d-4eed-b1bc-9c8c93cb9c8c}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>AMBER CAPITAL INVESTMENT MANAGEMENT ICAV - AMBER GLOBAL OPPORTUNITIES FUND</td><td class='num'><b>6,231</b></td><td>23/05/2023</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={37b71ea2-8800-48bd-becf-0942788cbeb5}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>OUGHOURLIAN , JOSEPH</td><td class='num'><b>5,130</b></td><td>21/09/2022</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={dfd8473c-9659-4e37-9326-870abc353acb}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>8</td><td>SOCIEDAD ESTATAL DE PARTICIPACIONES INDUSTRIALES</td><td class='num'><b>25,159</b></td><td>09/06/2022</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={aac02a59-72b6-41dc-8699-f61483e05fd7}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='latestrow'><td>9</td><td>UBS GROUP AG <span class='small'>(Otras notificaciones)</span></td><td class='num'><b>2,857</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/webservices/verdocumento/ver?e=%2fKNYs%2bvv9YpJ6C9Rm%2bUz%2fI7ZXFhxziiL7WChVXxRB3OY1bLbSDf76rU2Umyew0mw' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>2,965</b></td><td>09/09/2026</td><td></td></tr>
+<tr class='latestrow'><td>10</td><td>UBS GROUP AG <span class='small'>(Otras notificaciones)</span></td><td class='num'><b>3,014</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/webservices/verdocumento/ver?e=jzuLRSgU1gdkgr8JWc2sYxwfqbCl7%2fgeQoodKJOeeNCY1bLbSDf76rU2Umyew0mw' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>2,965</b></td><td>09/09/2026</td><td></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>0,831</td><td class='num'>0,000</td><td class='num'><b>0,831</b></td><td>10/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={1362d4e8-d853-4a88-8fbc-9113cf43940f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#138a08;font-weight:700'><b>11/09/2026</b></div>
+<div class='issuer'>EDREAMS ODIGEO, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A02850956' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div class='small' style='color:#138a08;font-weight:700'>Resultado encontrado mediante <a href='https://www.cnmv.es/derechosvoto/personasotrasnotificaciones.aspx?qS={fb4d64f6-4e16-4103-bfdf-d0ac99cd0a33}' target='_blank' rel='noopener'>OTRAS NOTIFICACIONES (1)</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>UBS GROUP AG</td><td class='num'><b>3,359</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={fbfc3331-3e8a-4bcd-9222-1eeb53c43e59}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>THE GOLDMAN SACHS GROUP, INC.</td><td class='num'><b>9,530</b></td><td>03/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={e625371a-fc43-44fe-b837-b14b3199b5c2}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>BYBROOK CAPITAL BADMINTON FUND LP</td><td class='num'><b>6,494</b></td><td>26/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={d88bb9ef-6957-4b51-9a3e-eef745020b90}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>BYBROOK CAPITAL HAZELTON MASTER FUND LP</td><td class='num'><b>4,366</b></td><td>26/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={a3284991-f753-4196-91e7-b854d3169e3d}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>POLUS CAPITAL MANAGEMENT GROUP LIMITED</td><td class='num'><b>31,174</b></td><td>26/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={90f13b4d-af88-436a-855b-b4f5eca32ef5}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>JPMORGAN CHASE &amp; CO</td><td class='num'><b>7,442</b></td><td>31/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={e5c202e2-88db-4b61-b106-a4861cbf6aa1}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>DUNNE , DANA PHILIP</td><td class='num'><b>3,260</b></td><td>27/04/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={e5c202e2-88db-4b61-b106-a4861cbf6aa1}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>8</td><td>PERMIRA HOLDINGS LIMITED</td><td class='num'><b>21,286</b></td><td>16/03/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={79c24df9-e8ce-4281-8adf-0e0ab808c07d}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>9</td><td>BYBROOK CAPITAL MASTER FUND LP</td><td class='num'><b>18,325</b></td><td>02/03/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={a5d2bcb5-2438-410b-8517-a5d8b5847e85}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>10</td><td>BARCLAYS PLC</td><td class='num'><b>6,085</b></td><td>21/10/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={335c5e0e-f850-40c6-af91-47c20be4942f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>11</td><td>BUSHEY , THOMAS</td><td class='num'><b>5,364</b></td><td>20/04/2021</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={d88bb9ef-6957-4b51-9a3e-eef745020b90}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='latestrow'><td>12</td><td>DWS INVESTMENT GMBH <span class='small'>(Otras notificaciones)</span></td><td class='num'><b>2,902</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/webservices/verdocumento/ver?e=jzuLRSgU1gdkgr8JWc2sYwYnvW73zdpsXCstX66xy%2b2Y1bLbSDf76rU2Umyew0mw' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>3,834</b></td><td>10/09/2026</td><td></td></tr>
+<tr class='latestrow'><td>13</td><td>DWS INVESTMENT GMBH <span class='small'>(Otras notificaciones)</span></td><td class='num'><b>2,902</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/webservices/verdocumento/ver?e=jzuLRSgU1gdkgr8JWc2sY2svAI4YcJqlx4Fau%2fjmfWqY1bLbSDf76rU2Umyew0mw' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>3,834</b></td><td>10/09/2026</td><td></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>7,593</td><td class='num'>0,000</td><td class='num'><b>7,593</b></td><td>28/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={d4d3deb5-dff9-4c48-bf57-c6178ff622b4}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#138a08;font-weight:700'><b>11/09/2026</b></div>
+<div class='issuer'>ACERINOX, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-28250777' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='latestrow'><td>1</td><td>THE GOLDMAN SACHS GROUP, INC.</td><td class='num'><b>4,877</b></td><td>11/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={05dfa419-0a55-4b84-a5d6-9814ae251d41}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='prevrow'><td></td><td>↳ Fecha anterior · Total A+B</td><td class='num'><b>4,933</b></td><td>09/09/2026</td><td></td></tr>
+<tr><td>2</td><td>FERGUSON , SCOTT DAVID</td><td class='num'><b>3,084</b></td><td>17/06/2026</td><td></td></tr>
+<tr><td>3</td><td>FUNDACIO PRIVADA DANIEL BRAVO ANDREU</td><td class='num'><b>5,705</b></td><td>07/01/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={4ca947be-00ba-45cc-8809-0e6e2585434a}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>0,043</td><td class='num'>0,000</td><td class='num'><b>0,043</b></td><td>24/08/2023</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={fbd8adc0-03f3-47dd-b0bc-52e7a8812e14}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>10/09/2026</b></div>
+<div class='issuer'>TELEFONICA, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A28015865' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>MORGAN STANLEY</td><td class='num'><b>8,398</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={29657df9-831d-4c93-a58c-e7809cdeb3ce}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>BLACKROCK INC.</td><td class='num'><b>6,241</b></td><td>23/06/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={d7ac670c-b400-48c1-9c1c-c41a12adfbf0}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>PUBLIC INVESTMENT FUND</td><td class='num'><b>9,969</b></td><td>06/02/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={2789251a-7ea0-44ed-9a9f-830e9925b2da}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>SOCIEDAD ESTATAL DE PARTICIPACIONES INDUSTRIALES</td><td class='num'><b>10,000</b></td><td>20/05/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={f492469f-0190-4cf9-a559-4f0384e43588}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>CRITERIA CAIXA, S.A.U.</td><td class='num'><b>5,007</b></td><td>08/04/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={98efa076-a3f7-449d-92a5-6c731c42d7fd}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>FUNDACION BANCARIA CAIXA D ESTALVIS I PENSIONS DE BARCELONA</td><td class='num'><b>5,007</b></td><td>08/04/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={6d4eee1a-8af5-450e-b101-343450d5e869}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>0,493</td><td class='num'>0,000</td><td class='num'><b>0,493</b></td><td>14/05/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={53919e3d-7dab-40c3-a6a1-274a1d6c0846}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>10/09/2026</b></div>
+<div class='issuer'>TECNICAS REUNIDAS, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-28092583' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>JPMORGAN ASSET MANAGEMENT HOLDINGS INC.</td><td class='num'><b>3,240</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={e4310a9e-df4e-4f09-89be-61b0557df055}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr class='hotrow'><td>2</td><td>GARCIA PARAMES, FRANCISCO</td><td class='num'><b>3,004</b></td><td>09/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={3a30e9b5-9fbf-4e34-9808-117bbea60513}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>MONETA ASSET MANAGEMENT</td><td class='num'><b>3,039</b></td><td>07/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={d490a7c1-908c-4619-a5d6-c5ad6a566e0d}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>DNCA FINANCE, S.A.</td><td class='num'><b>3,011</b></td><td>01/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={c82ed289-ba74-478d-859d-a18089624923}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>BLACKROCK INC.</td><td class='num'><b>3,051</b></td><td>07/04/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={7b82be62-12b5-4f6b-8e69-9981500bac9c}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>WELLINGTON MANAGEMENT GROUP LLP</td><td class='num'><b>3,087</b></td><td>06/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={f102d46b-5b4b-401d-812f-8ab7df60a47c}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>ARALTEC, S.L.</td><td class='num'><b>32,392</b></td><td>28/02/2025</td><td></td></tr>
+<tr><td>8</td><td>ARBURUA ASPIUNZA, PILAR</td><td class='num'><b>5,234</b></td><td>28/02/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={7b82be62-12b5-4f6b-8e69-9981500bac9c}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>2,743</td><td class='num'>0,000</td><td class='num'><b>2,743</b></td><td>28/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={80c70e2a-160e-4afb-acff-2909bf8fd095}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td class='num'>2,743</td><td class='num'>0,000</td><td class='num'><b>2,743</b></td><td>27/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={27332747-ac2e-41b8-b9f8-44080c58b094}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>10/09/2026</b></div>
+<div class='issuer'>SOLARIA ENERGIA Y MEDIOAMBIENTE, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A83511501' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>COHEN , STEVE A.</td><td class='num'><b>3,274</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={d72ddbd4-6c3f-4637-86ca-0ca5dc32b4d3}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>POINT72 LONDON INVESTMENTS LTD</td><td class='num'><b>2,045</b></td><td>25/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={27c0c51f-cbc1-441b-a3e1-31bb7949aa86}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>MILLENNIUM GROUP MANAGEMENT LLC</td><td class='num'><b>1,084</b></td><td>11/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={7b8b1715-5fe4-4ba2-8162-91dfb293ffb7}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>INVESCO LTD.</td><td class='num'><b>1,961</b></td><td>04/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={75828f3c-183f-43b3-a9f7-32b96e0f20dd}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>POINT72 ASSOCIATES, LLC</td><td class='num'><b>1,002</b></td><td>31/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={2001d4be-aac5-4105-ba62-6833086cd9ff}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>BLACKROCK INC.</td><td class='num'><b>3,891</b></td><td>10/06/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={664e03f0-2905-4925-b63e-b08d8319ab78}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>STONESHIELD HOLDING S.A.R.L.</td><td class='num'><b>9,545</b></td><td>21/05/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={e75076a7-380d-4508-b433-b34757c1b94a}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>8</td><td>MORGAN STANLEY</td><td class='num'><b>7,646</b></td><td>05/03/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={f2ed00f8-f2aa-40e1-ab25-daf72b61ac4f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>9</td><td>DIAZ-TEJEIRO GUTIERREZ, ENRIQUE</td><td class='num'><b>13,498</b></td><td>06/06/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={9f6a8f2d-e89c-4164-ac5c-445fee06a3de}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>10</td><td>DIAZ-TEJEIRO LARRAÑAGA, ARTURO</td><td class='num'><b>8,803</b></td><td>06/06/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={b81549cb-b8d6-41ec-8601-4c9e039ccb27}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>11</td><td>DIAZ-TEJEIRO LARRAÑAGA, ENRIQUE</td><td class='num'><b>6,390</b></td><td>06/06/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={7bcd98f6-2f6b-4567-8c7e-129051a85d70}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>12</td><td>DIAZ-TEJEIRO LARRAÑAGA, MIGUEL</td><td class='num'><b>7,731</b></td><td>06/06/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={6e2fab18-b5fc-46cd-b96a-dd9ad1061a15}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr class='hotrow'><td>1</td><td class='num'>2,115</td><td class='num'>0,000</td><td class='num'><b>2,115</b></td><td>08/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={cadbb854-c7ae-4b3e-aada-1d0330adcec8}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>10/09/2026</b></div>
+<div class='issuer'>OBRASCON HUARTE LAIN, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-48010573' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>JPMORGAN CHASE &amp; CO</td><td class='num'><b>9,663</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={d3a617f7-0e6b-4907-abc4-13ea1c1a4a16}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>ACCION CONCERTADA</td><td class='num'><b>29,429</b></td><td>17/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={d01efcb3-3bbc-4d94-a895-99051c9b5a9d}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>LEGAL &amp; GENERAL INVESTMENT MANAGEMENT LIMITED</td><td class='num'><b>3,139</b></td><td>16/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={f4b7e3bd-74a9-44c2-90e0-399c53082e6f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>ELIAS NAVARRO, FRANCISCO JOSE</td><td class='num'><b>8,674</b></td><td>23/05/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={03d4af93-16ca-40c1-951b-2883a28de7db}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>MILLENNIUM GROUP MANAGEMENT LLC</td><td class='num'><b>2,090</b></td><td>08/05/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={3d3e340e-83d1-41f1-8e29-f811ef024b73}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>0,068</td><td class='num'>0,000</td><td class='num'><b>0,068</b></td><td>03/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={34aab667-7c67-455b-8ce7-c826a451a4f3}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>10/09/2026</b></div>
+<div class='issuer'>LOGISTA INTEGRAL, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A87008579' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr><td>1</td><td>FMR LLC</td><td class='num'><b>4,586</b></td><td>20/01/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={5ee951ca-6ed1-4f0e-9a43-b6faa46eba15}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>MASAVEU HERRERO, FERNANDO</td><td class='num'><b>5,201</b></td><td>19/12/2022</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={08a3b41c-69e0-4c84-9215-17e874885944}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>IMPERIAL BRANDS PLC</td><td class='num'><b>50,008</b></td><td>20/07/2021</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={2220a79c-b40a-4433-9eae-1a233bf44078}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr class='hotrow'><td>1</td><td class='num'>0,437</td><td class='num'>0,000</td><td class='num'><b>0,437</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={05111f61-d096-4384-8cdd-0366f07ebe22}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>10/09/2026</b></div>
+<div class='issuer'>FLUIDRA, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-17728593' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>FIDELITY INTERNATIONAL LIMITED</td><td class='num'><b>1,003</b></td><td>10/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={1b366250-8a6c-49d1-925a-69b81432eca3}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>BEUZELIN , HUGUES</td><td class='num'><b>3,124</b></td><td>13/05/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={c5435360-76ea-4ce5-bcde-a96d0846fc69}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>ADBE PARTNERS, S.L.</td><td class='num'><b>28,298</b></td><td>04/12/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={3baf5208-81a9-4560-a051-5825b357fbd0}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>PUIG ROCHA, MANUEL</td><td class='num'><b>7,000</b></td><td>12/05/2023</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={0b0931e0-8c33-4339-ab3a-e8cc6de229e7}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>PISCINE LUXEMBOURG HOLDINGS 1, S.A R.L.</td><td class='num'><b>11,465</b></td><td>20/09/2021</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={f4a37e25-bcb1-4f9e-a1d9-8e06ac9d4cc5}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>RHÔNE CAPITAL L.L.C.</td><td class='num'><b>11,465</b></td><td>20/09/2021</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={097e2b6f-b567-4f30-9a59-9a636a8a4100}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>G3T, S.L.</td><td class='num'><b>5,002</b></td><td>23/03/2021</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={8ef61699-effa-4b4a-9f04-414d3b85fe3a}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>1,474</td><td class='num'>0,000</td><td class='num'><b>1,474</b></td><td>28/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={70055333-66e8-45d5-bfee-3a782e929cad}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>08/09/2026</b></div>
+<div class='issuer'>LABORATORIOS FARMACEUTICOS ROVI, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A-28041283' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr><td>1</td><td>INDUMENTA PUERI, S.L.</td><td class='num'><b>13,439</b></td><td>09/06/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={8d7a99ef-6326-4e0d-966c-5053f2b767be}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>NORBEL INVERSIONES, S.L.</td><td class='num'><b>58,186</b></td><td>20/09/2024</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={73a58c3f-4501-4dbc-95fd-cb9442a3281b}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr class='hotrow'><td>1</td><td class='num'>0,181</td><td class='num'>0,000</td><td class='num'><b>0,181</b></td><td>08/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={f0b8cc21-95d8-4614-bfd5-3262f5bdb6ed}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>08/09/2026</b></div>
+<div class='issuer'>GRIFOLS, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A58389123' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr class='hotrow'><td>1</td><td>MORGAN STANLEY</td><td class='num'><b>3,824</b></td><td>08/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={c1461dac-f599-4139-abda-7ea506431eee}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>FIDELITY INTERNATIONAL LIMITED</td><td class='num'><b>1,009</b></td><td>25/08/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={f719cd65-c9da-4433-8e77-2367f1038d8d}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>EMPLOYEES PROVIDENT FUND BOARD (EPF)</td><td class='num'><b>3,034</b></td><td>24/07/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={f719cd65-c9da-4433-8e77-2367f1038d8d}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>THE GOLDMAN SACHS GROUP, INC.</td><td class='num'><b>4,621</b></td><td>26/06/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={26f593c7-4a3a-4255-a2c0-06d76d8aab86}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>BLACKROCK INC.</td><td class='num'><b>3,019</b></td><td>05/06/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={55456f60-4669-4ce2-b7b8-d10b08ab8ba4}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>ANDERSEN , MARC P.</td><td class='num'><b>5,391</b></td><td>14/05/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={4eeaeb05-1ac1-48a8-b7e9-eeb47332ac6e}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>FLAT FOOTED LLC.</td><td class='num'><b>5,391</b></td><td>14/05/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={3b25647e-288f-4c41-87ec-25484ccf182b}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>8</td><td>GRIFOLS COMA-CROS, ALBERT</td><td class='num'><b>7,105</b></td><td>17/12/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={23062b26-bab3-41ab-bd56-be679b9e87d3}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>9</td><td>GRIFOLS ROURA, ENRIQUE Y NURIA</td><td class='num'><b>15,308</b></td><td>08/10/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={23062b26-bab3-41ab-bd56-be679b9e87d3}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>10</td><td>DERIA, S.L.</td><td class='num'><b>15,204</b></td><td>07/10/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={8ef151af-9bfd-4c86-b59e-a748fc21b836}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>11</td><td>MASON CAPITAL MANAGEMENT LLC</td><td class='num'><b>3,174</b></td><td>13/02/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={b7b0619d-798f-466f-adf9-16254aade539}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>12</td><td>MASON CAPITAL MASTER FUND L.P.</td><td class='num'><b>3,174</b></td><td>13/02/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={b7b0619d-798f-466f-adf9-16254aade539}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>13</td><td>ARMISTICE CAPITAL MASTER FUND LTD</td><td class='num'><b>1,064</b></td><td>28/01/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={31b1a4bf-b776-43cd-a0d9-63cf90246dc8}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>14</td><td>PONDER TRADE, S.L.</td><td class='num'><b>7,089</b></td><td>28/02/2022</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={fcf9c346-00f0-4c22-b5ec-b2a82e786e8a}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr><td>1</td><td class='num'>0,000</td><td class='num'>0,000</td><td class='num'><b>0,000</b></td><td>23/10/2018</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={aee42dd7-e190-47be-86d4-e7c17ce6b621}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+<div class='card'>
+<div style='color:#d00000;font-weight:700'><b>08/09/2026</b></div>
+<div class='issuer'>CELLNEX TELECOM, S.A.</div>
+<div class='small'>Landing: <a href='https://www.cnmv.es/derechosvoto/ps_ac_ini.aspx?nif=A64907306' target='_blank' rel='noopener'>ps_ac_ini</a></div>
+<div style='margin-top:8px'><b>Participaciones significativas</b></div>
+<table>
+<tr><th>#</th><th>Nombre</th><th class='num'>Total A+B</th><th>Fecha</th><th>Detalle</th></tr>
+<tr><td>1</td><td>LAZARD ASSET MANAGEMENT</td><td class='num'><b>3,021</b></td><td>20/05/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={36fb1654-3a5a-4c57-b643-a5ad0cd49efd}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>2</td><td>BLACKROCK INC.</td><td class='num'><b>5,001</b></td><td>03/04/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={18053f03-104d-4d7e-b7c0-eaa8b75ac1c0}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>3</td><td>HOHN , CHRISTOPHER ANTHONY</td><td class='num'><b>10,145</b></td><td>25/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={0976b9d5-cb4a-4390-ae6d-8b1e05e3de4e}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>4</td><td>TCI LUXEMBOURG, S.A.R.L.</td><td class='num'><b>8,338</b></td><td>25/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={36fb1654-3a5a-4c57-b643-a5ad0cd49efd}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>5</td><td>EDIZIONE S.R.L.</td><td class='num'><b>10,252</b></td><td>24/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={3aa8ee21-137b-4d60-9e70-3d7f2eea6cb5}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>6</td><td>CANADA PENSION PLAN INVESTMENT BOARD</td><td class='num'><b>4,662</b></td><td>12/11/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={7d96de7c-9467-437c-8271-50e3ccbad03b}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>7</td><td>DODGE &amp; COX</td><td class='num'><b>3,277</b></td><td>21/10/2025</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnteriores.aspx?qS={3aa8ee21-137b-4d60-9e70-3d7f2eea6cb5}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>8</td><td>GIC (VENTURES) PRIVATE LIMITED</td><td class='num'><b>6,730</b></td><td>23/03/2023</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={e33cec99-2ce6-477a-ba20-0fc30ef3e02f}' target='_blank' rel='noopener'>Ver</a></td></tr>
+<tr><td>9</td><td>GIC PRIVATE LIMITED</td><td class='num'><b>7,031</b></td><td>23/03/2023</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnuladas.aspx?qS={e09a5662-de9a-4fed-9891-3c4cbf8a41c8}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+<div style='margin-top:8px'><b>Notificaciones sobre acciones propias (Autocartera)</b></div>
+<table>
+<tr><th>#</th><th class='num'>% Directo</th><th class='num'>% Indirecto</th><th class='num'>% Total</th><th>F. Registro Entrada CNMV</th><th>Histórico</th></tr>
+<tr class='hotrow'><td>1</td><td class='num'>0,317</td><td class='num'>0,000</td><td class='num'><b>0,317</b></td><td>08/09/2026</td><td><a href='https://www.cnmv.es/derechosvoto/NotificacionesAnterioresAC.aspx?qS={dcb43dfa-a1a6-4305-a1c6-2a759d7fe40a}' target='_blank' rel='noopener'>Ver</a></td></tr>
+</table>
+</div>
+</body></html>
