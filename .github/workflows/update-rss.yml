@@ -1,0 +1,69 @@
+name: Actualizar RSS CNMV
+
+on:
+  workflow_dispatch:
+  schedule:
+    # GitHub usa UTC. Este intervalo cubre 07:00-22:00 en España tanto
+    # en horario de invierno como de verano; el primer paso aplica el filtro exacto.
+    - cron: "0 5-21 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-rss-cnmv
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Comprobar horario de España
+        id: horario
+        env:
+          EVENTO: ${{ github.event_name }}
+        run: |
+          if [ "$EVENTO" = "workflow_dispatch" ]; then
+            echo "ejecutar=si" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          DIA=$(TZ=Europe/Madrid date +%u)
+          HORA=$(TZ=Europe/Madrid date +%H)
+          if [ "$DIA" -ge 1 ] && [ "$DIA" -le 5 ] && [ "$HORA" -ge 7 ] && [ "$HORA" -le 22 ]; then
+            echo "ejecutar=si" >> "$GITHUB_OUTPUT"
+          else
+            echo "ejecutar=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Descargar repositorio
+        if: steps.horario.outputs.ejecutar == 'si'
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        if: steps.horario.outputs.ejecutar == 'si'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        if: steps.horario.outputs.ejecutar == 'si'
+        run: pip install -r requirements.txt
+
+      - name: Generar RSS
+        if: steps.horario.outputs.ejecutar == 'si'
+        run: python main.py --keep_days 5
+
+      - name: Guardar cambios
+        if: steps.horario.outputs.ejecutar == 'si'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feed.xml resultados/
+          if git diff --cached --quiet; then
+            echo "No hay cambios"
+          else
+            git commit -m "Actualizar RSS CNMV"
+            git push
+          fi
