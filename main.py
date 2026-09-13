@@ -1174,7 +1174,8 @@ def enrich_issuer(session: requests.Session, item, window_start: dt.date, window
         (row.get("fecha_registro") or "").strip() == latest_busqueda_date
         for row in result.get("ac_rows", [])
     )
-    if (latest_busqueda_date and not has_latest_ps and not has_latest_ac and
+    if (item.get("fecha") == latest_busqueda_date and
+            latest_busqueda_date and not has_latest_ps and not has_latest_ac and
             result.get("other_notifications_url")):
         try:
             all_other_rows = collect_other_notifications(session, result["other_notifications_url"])
