@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 import re
 import os
@@ -1446,195 +1447,277 @@ def render_html(window_start: dt.date, window_end: dt.date, results, fuente_url:
 
     out.append("</body></html>")
     return "\n".join(out)
-
+    
 # ============================================================
 # RSS 2.0 PARA FEEDLY
 # ============================================================
+
 def render_rss(results, fuente_url: str):
-    """Genera una RSS válida con GUID estable para evitar duplicados en Feedly."""
+    """
+    Genera una RSS válida con GUID estable para evitar
+    duplicados en Feedly.
+
+    Formato:
+    EMPRESA · TITULAR · FECHA · ACTUAL · ANTERIOR · NETO
+    """
+
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = "CNMV · Participaciones y autocartera"
+
+    ET.SubElement(channel, "title").text = (
+        "CNMV · Participaciones y autocartera"
+    )
+
     ET.SubElement(channel, "link").text = fuente_url
+
     ET.SubElement(channel, "description").text = (
         "Notificaciones de participaciones significativas, autocartera y "
         "otras notificaciones publicadas por la CNMV."
     )
+
     ET.SubElement(channel, "language").text = "es"
+
     ET.SubElement(channel, "lastBuildDate").text = format_datetime(
         dt.datetime.now(dt.timezone.utc)
     )
 
+    # ========================================================
+    # FORMATO DE PORCENTAJES
+    # ========================================================
+
+    def formato_pct(valor):
+        if valor is None:
+            return "No disponible"
+
+        return f"{valor:.3f}".replace(".", ",")
+
+    def formato_neto(actual, anterior):
+        if actual is None or anterior is None:
+            return "No disponible"
+
+        neto = actual - anterior
+
+        if abs(neto) < 0.0005:
+            neto = 0.0
+
+        signo = "+" if neto > 0 else ""
+
+        return f"{signo}{formato_pct(neto)} pp"
+
     entries = []
+
+    # ========================================================
+    # PARTICIPACIONES SIGNIFICATIVAS
+    # ========================================================
+
     for result in results:
+
         issuer = (result.get("emisor") or "").strip()
 
         for row in result.get("ps_rows", []):
+
             date_str = (row.get("fecha") or "").strip()
             holder = (row.get("nombre") or "").strip()
             total = (row.get("total_ab") or "").strip()
-            link = (row.get("detalle_url") or row.get("historico_url") or
-                    result.get("other_notifications_url") or result.get("ps_ac_ini_url") or fuente_url)
-            source = "Otras notificaciones" if row.get("from_other_notifications") else "Participación significativa"
-            title = f"{issuer}: {holder} · Total A+B {total}"
+
+            link = (
+                row.get("detalle_url")
+                or row.get("historico_url")
+                or result.get("other_notifications_url")
+                or result.get("ps_ac_ini_url")
+                or fuente_url
+            )
+
+            source = (
+                "Otras notificaciones"
+                if row.get("from_other_notifications")
+                else "Participación significativa"
+            )
+
+            # Porcentaje actual
+            actual = parse_number(total)
+
+            # Porcentaje anterior
+            anterior_raw = row.get("prev_total_pct")
+
+            anterior = (
+                parse_number(anterior_raw)
+                if anterior_raw is not None
+                else None
+            )
+
+            # Variación neta
+            neto = formato_neto(actual, anterior)
+
+            # =================================================
+            # TÍTULO DE FEEDLY
+            # =================================================
+
+            title = (
+                f"{issuer}"
+                f" · {holder}"
+                f" · {date_str}"
+                f" · ACTUAL: {formato_pct(actual)}%"
+                f" · ANTERIOR: {formato_pct(anterior)}%"
+                f" · NETO: {neto}"
+            )
+
+            # =================================================
+            # CONTENIDO DE LA NOTICIA
+            # =================================================
+
             description = (
                 f"<b>Empresa:</b> {html.escape(issuer)}<br>"
                 f"<b>Titular:</b> {html.escape(holder)}<br>"
-                f"<b>Total A+B:</b> {html.escape(total)}<br>"
                 f"<b>Fecha CNMV:</b> {html.escape(date_str)}<br>"
-                f"<b>Origen:</b> {html.escape(source)}"
+                f"<b>Origen:</b> {html.escape(source)}<br>"
+                f"<br>"
+                f"<b>PORCENTAJE ACTUAL:</b> {formato_pct(actual)}%<br>"
+                f"<b>PORCENTAJE ANTERIOR:</b> {formato_pct(anterior)}%<br>"
+                f"<b>VARIACIÓN NETA:</b> {neto}"
             )
+
             if row.get("prev_total_pct") is not None:
+
                 description += (
-                    f"<br><b>Total A+B anterior:</b> {html.escape(str(row.get('prev_total_pct')))}"
-                    f"<br><b>Fecha anterior:</b> {html.escape(row.get('prev_date') or 'Sin fecha anterior')}"
+                    f"<br><b>Fecha anterior:</b> "
+                    f"{html.escape(row.get('prev_date') or 'Sin fecha anterior')}"
                 )
-            stable_key = "|".join(("PS", issuer, holder, date_str, total, link))
-            entries.append((date_str, title, description, link, stable_key))
+
+            # GUID estable: se conserva el original
+            stable_key = "|".join(
+                ("PS", issuer, holder, date_str, total, link)
+            )
+
+            entries.append(
+                (date_str, title, description, link, stable_key)
+            )
+
+        # ====================================================
+        # AUTOCARTERA
+        # ====================================================
 
         for row in result.get("ac_rows", []):
-            date_str = (row.get("fecha_registro") or "").strip()
-            total = (row.get("pct_total") or "").strip()
-            link = row.get("historico_url") or result.get("ps_ac_ini_url") or fuente_url
-            title = f"{issuer}: autocartera · {total}%"
+
+            date_str = (
+                row.get("fecha_registro") or ""
+            ).strip()
+
+            total = (
+                row.get("pct_total") or ""
+            ).strip()
+
+            link = (
+                row.get("historico_url")
+                or result.get("ps_ac_ini_url")
+                or fuente_url
+            )
+
+            # Porcentaje actual
+            actual = parse_number(total)
+
+            # =================================================
+            # TÍTULO AUTOCARTERA
+            # =================================================
+
+            title = (
+                f"{issuer}"
+                f" · AUTOCARTERA"
+                f" · {date_str}"
+                f" · ACTUAL: {formato_pct(actual)}%"
+            )
+
             description = (
                 f"<b>Empresa:</b> {html.escape(issuer)}<br>"
-                f"<b>% directo:</b> {html.escape(row.get('pct_directo') or '')}<br>"
-                f"<b>% indirecto:</b> {html.escape(row.get('pct_indirecto') or '')}<br>"
-                f"<b>% total:</b> {html.escape(total)}<br>"
-                f"<b>Fecha CNMV:</b> {html.escape(date_str)}"
+                f"<b>Fecha CNMV:</b> {html.escape(date_str)}<br>"
+                f"<b>% directo:</b> "
+                f"{html.escape(row.get('pct_directo') or '')}<br>"
+                f"<b>% indirecto:</b> "
+                f"{html.escape(row.get('pct_indirecto') or '')}<br>"
+                f"<b>% total:</b> "
+                f"{formato_pct(actual)}%"
             )
-            stable_key = "|".join(("AC", issuer, date_str, total, link))
-            entries.append((date_str, title, description, link, stable_key))
+
+            # GUID estable: se conserva el original
+            stable_key = "|".join(
+                ("AC", issuer, date_str, total, link)
+            )
+
+            entries.append(
+                (date_str, title, description, link, stable_key)
+            )
+
+    # ========================================================
+    # ORDENAR POR FECHA
+    # ========================================================
 
     def entry_date(entry):
+
         try:
             return parse_date_es(entry[0])
+
         except Exception:
             return dt.date.min
 
+    # ========================================================
+    # GENERAR RSS
+    # ========================================================
+
     for date_str, title, description, link, stable_key in sorted(
-            entries, key=entry_date, reverse=True):
+        entries,
+        key=entry_date,
+        reverse=True
+    ):
+
         item = ET.SubElement(channel, "item")
+
         ET.SubElement(item, "title").text = title
+
         ET.SubElement(item, "link").text = link
+
         ET.SubElement(item, "description").text = description
-        guid = ET.SubElement(item, "guid", {"isPermaLink": "false"})
-        guid.text = hashlib.sha256(stable_key.encode("utf-8")).hexdigest()
+
+        guid = ET.SubElement(
+            item,
+            "guid",
+            {"isPermaLink": "false"}
+        )
+
+        guid.text = hashlib.sha256(
+            stable_key.encode("utf-8")
+        ).hexdigest()
+
         try:
+
             published = dt.datetime.combine(
-                parse_date_es(date_str), dt.time(12, 0), tzinfo=dt.timezone.utc
+                parse_date_es(date_str),
+                dt.time(12, 0),
+                tzinfo=dt.timezone.utc
             )
-            ET.SubElement(item, "pubDate").text = format_datetime(published)
+
+            ET.SubElement(
+                item,
+                "pubDate"
+            ).text = format_datetime(published)
+
         except Exception:
             pass
 
     ET.indent(rss, space="  ")
-    return "<?xml version='1.0' encoding='UTF-8'?>\n" + ET.tostring(
-        rss, encoding="unicode", short_empty_elements=True
-    ) + "\n"
 
-# ============================================================
-# MAIN
-# ============================================================
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--perfil", type=int, default=2)
-    parser.add_argument("--keep_days", type=int, default=5, help="Número de días (fechas cabecera) a conservar")
-    parser.add_argument("--pdf_text_max_chars", type=int, default=60000, help="Máximo de caracteres del texto PDF embebido en el HTML")
-    args = parser.parse_args()
+    return (
+        "<?xml version='1.0' encoding='UTF-8'?>\n"
+        + ET.tostring(
+            rss,
+            encoding="unicode",
+            short_empty_elements=True
+        )
+        + "\n"
+    )
 
-    outdir = ensure_outdir("resultados")
-    errlog = os.path.join(outdir, "error.log")
 
-    try:
-        write_text_file(os.path.join(outdir, "BOOTSTRAP_OK.txt"),
-                        f"Bootstrap OK\nCWD={os.getcwd()}\nOUTDIR={outdir}\nTIME={dt.datetime.now().isoformat()}\n")
-    except Exception:
-        pass
 
-    try:
-        fuente_url = build_busqueda_url(idPerfil=args.perfil, tipo=1, lang="es")
+      
 
-        session = requests.Session()
-        session.headers.update({
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36"
-            ),
-            "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
-        })
-
-        print("DEBUG cwd:", os.getcwd())
-        print("DEBUG outdir:", outdir)
-        print("DEBUG URL:", fuente_url)
-
-        html_src = fetch_html(session, fuente_url)
-        soup = BeautifulSoup(html_src, "html.parser")
-        txt = soup.get_text(" ", strip=True)
-
-        # 1) Fechas marcadas y quedarnos con las N más recientes
-        marked_dates = extract_marked_dates_from_busqueda(soup)
-        keep_dates = marked_dates[: max(args.keep_days, 0)]
-        keep_set = set(keep_dates)
-
-        latest_busqueda_date = keep_dates[0] if keep_dates else ""
-
-        print("DEBUG fechas marcadas encontradas:", len(marked_dates))
-        print("DEBUG fechas que se conservan:", keep_dates)
-        print("DEBUG última fecha búsqueda:", latest_busqueda_date)
-
-        if keep_dates:
-            window_end = parse_date_es(keep_dates[0])
-            window_start = parse_date_es(keep_dates[-1])
-        else:
-            window_start = extract_start_date_from_busqueda(soup) or (dt.date.today() - dt.timedelta(days=5))
-            all_dates = [parse_date_es(m.group(1)) for m in DATE_RE.finditer(txt)]
-            window_end = max(all_dates) if all_dates else dt.date.today()
-
-        # 2) Emisores filtrados por esas fechas pedidas
-        issuers_all = extract_psac_issuers_from_busqueda_view_by_date(soup)
-        issuers = [it for it in issuers_all if (it.get("fecha") in keep_set)]
-
-        print("DEBUG emisores encontrados total:", len(issuers_all))
-        print("DEBUG emisores tras filtrar por fechas pedidas:", len(issuers))
-
-        # 3) Enriquecer + render
-        results = [
-            enrich_issuer(
-                session,
-                it,
-                window_start,
-                window_end,
-                latest_busqueda_date,
-                pdf_text_max_chars=args.pdf_text_max_chars
-            )
-            for it in issuers
-        ]
-        html_out = render_html(window_start, window_end, results, fuente_url, keep_dates, latest_busqueda_date)
-
-        fname = f"cnmv_ps_ac_{window_start.strftime('%Y%m%d')}_{window_end.strftime('%Y%m%d')}.html"
-        outpath = os.path.abspath(os.path.join(outdir, fname))
-        print("DEBUG outpath final:", outpath)
-
-        write_text_file(outpath, html_out)
-
-        # GitHub y Feedly leerán siempre este archivo estable en la raíz.
-        feed_path = os.path.abspath(os.path.join(os.getcwd(), "feed.xml"))
-        write_text_file(feed_path, render_rss(results, fuente_url))
-
-        print(f"✔ Generado HTML en: {outpath}")
-        print(f"✔ Generada RSS en: {feed_path}")
-        print("DEBUG archivos en resultados:", list_dir_files(outdir))
-
-    except Exception:
-        tb = traceback.format_exc()
-        try:
-            write_text_file(errlog, tb)
-        except Exception:
-            pass
-        print("❌ Error: revisa", errlog)
-        print(tb)
-
-if __name__ == "__main__":
-    main()
+     
+    
