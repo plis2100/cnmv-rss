@@ -2,9 +2,10 @@ name: Actualizar RSS CNMV
 
 on:
   workflow_dispatch:
+
   schedule:
-    # GitHub usa UTC. Este intervalo cubre 07:00-22:00 en España tanto
-    # en horario de invierno como de verano; el primer paso aplica el filtro exacto.
+    # GitHub Actions usa UTC.
+    # Ejecutamos cada hora y después comprobamos la hora real de Madrid.
     - cron: "0 5-21 * * 1-5"
 
 permissions:
@@ -18,7 +19,12 @@ jobs:
   actualizar:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+
     steps:
+
+      # ============================================================
+      # 1. COMPROBAR HORARIO
+      # ============================================================
       - name: Comprobar horario de España
         id: horario
         env:
@@ -28,18 +34,40 @@ jobs:
             echo "ejecutar=si" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+
           DIA=$(TZ=Europe/Madrid date +%u)
           HORA=$(TZ=Europe/Madrid date +%H)
-          if [ "$DIA" -ge 1 ] && [ "$DIA" -le 5 ] && [ "$HORA" -ge 7 ] && [ "$HORA" -le 22 ]; then
+
+          echo "Día: $DIA"
+          echo "Hora España: $HORA"
+
+          if [ "$DIA" -ge 1 ] && \
+             [ "$DIA" -le 5 ] && \
+             [ "$HORA" -ge 7 ] && \
+             [ "$HORA" -le 22 ]; then
+
             echo "ejecutar=si" >> "$GITHUB_OUTPUT"
+
           else
+
             echo "ejecutar=no" >> "$GITHUB_OUTPUT"
+
           fi
 
+
+      # ============================================================
+      # 2. DESCARGAR REPOSITORIO
+      # ============================================================
       - name: Descargar repositorio
         if: steps.horario.outputs.ejecutar == 'si'
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+
+      # ============================================================
+      # 3. CONFIGURAR PYTHON
+      # ============================================================
       - name: Configurar Python
         if: steps.horario.outputs.ejecutar == 'si'
         uses: actions/setup-python@v5
@@ -47,23 +75,80 @@ jobs:
           python-version: "3.12"
           cache: pip
 
+
+      # ============================================================
+      # 4. INSTALAR DEPENDENCIAS
+      # ============================================================
       - name: Instalar dependencias
         if: steps.horario.outputs.ejecutar == 'si'
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
+
+      # ============================================================
+      # 5. EJECUTAR PROGRAMA
+      # ============================================================
       - name: Generar RSS
         if: steps.horario.outputs.ejecutar == 'si'
-        run: python main.py --keep_days 5
+        run: |
+          python main.py --keep_days 5
 
+
+      # ============================================================
+      # 6. COMPROBAR RSS
+      # ============================================================
+      - name: Comprobar feed.xml
+        if: steps.horario.outputs.ejecutar == 'si'
+        run: |
+          if [ ! -f feed.xml ]; then
+            echo "ERROR: main.py no ha generado feed.xml"
+            exit 1
+          fi
+
+          echo "feed.xml generado correctamente"
+          echo "Tamaño:"
+          ls -lh feed.xml
+
+          echo "Número de items:"
+          grep -c "<item>" feed.xml || true
+
+
+      # ============================================================
+      # 7. GUARDAR CAMBIOS
+      # ============================================================
       - name: Guardar cambios
         if: steps.horario.outputs.ejecutar == 'si'
         run: |
+
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.xml resultados/
+          git config user.email \
+          "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add feed.xml
+
+          if [ -d resultados ]; then
+            git add resultados/
+          fi
+
           if git diff --cached --quiet; then
-            echo "No hay cambios"
+
+            echo "======================================"
+            echo "NO HAY CAMBIOS EN LA CNMV"
+            echo "======================================"
+
           else
-            git commit -m "Actualizar RSS CNMV"
-            git push
+
+            echo "======================================"
+            echo "HAY CAMBIOS - ACTUALIZANDO RSS"
+            echo "======================================"
+
+            git status
+
+            git commit -m "Actualizar RSS CNMV $(TZ=Europe/Madrid date '+%d-%m-%Y %H:%M')"
+
+            git pull --rebase origin main
+
+            git push origin main
+
           fi
