@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
 
   schedule:
-    # GitHub Actions usa UTC.
-    # Ejecutamos cada hora y después comprobamos la hora real de Madrid.
+    # GitHub usa UTC.
+    # Ejecuta cada hora de lunes a viernes.
+    # Después comprobamos la hora real de Madrid.
     - cron: "0 5-21 * * 1-5"
 
 permissions:
@@ -16,30 +17,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+
   actualizar:
+
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
 
       # ============================================================
-      # 1. COMPROBAR HORARIO
+      # COMPROBAR HORARIO
       # ============================================================
+
       - name: Comprobar horario de España
         id: horario
+        shell: bash
+
         env:
           EVENTO: ${{ github.event_name }}
+
         run: |
+
           if [ "$EVENTO" = "workflow_dispatch" ]; then
+
             echo "ejecutar=si" >> "$GITHUB_OUTPUT"
+
             exit 0
+
           fi
 
+
           DIA=$(TZ=Europe/Madrid date +%u)
+
           HORA=$(TZ=Europe/Madrid date +%H)
 
-          echo "Día: $DIA"
-          echo "Hora España: $HORA"
+
+          echo "Hora de Madrid: $(TZ=Europe/Madrid date '+%d/%m/%Y %H:%M:%S')"
+
 
           if [ "$DIA" -ge 1 ] && \
              [ "$DIA" -le 5 ] && \
@@ -56,99 +70,198 @@ jobs:
 
 
       # ============================================================
-      # 2. DESCARGAR REPOSITORIO
+      # DESCARGAR REPOSITORIO
       # ============================================================
+
       - name: Descargar repositorio
+
         if: steps.horario.outputs.ejecutar == 'si'
+
         uses: actions/checkout@v4
+
         with:
+
           fetch-depth: 0
 
 
       # ============================================================
-      # 3. CONFIGURAR PYTHON
+      # CONFIGURAR PYTHON
       # ============================================================
+
       - name: Configurar Python
+
         if: steps.horario.outputs.ejecutar == 'si'
+
         uses: actions/setup-python@v5
+
         with:
+
           python-version: "3.12"
+
           cache: pip
 
 
       # ============================================================
-      # 4. INSTALAR DEPENDENCIAS
+      # INSTALAR DEPENDENCIAS
       # ============================================================
+
       - name: Instalar dependencias
+
         if: steps.horario.outputs.ejecutar == 'si'
+
         run: |
+
           python -m pip install --upgrade pip
+
           pip install -r requirements.txt
 
 
       # ============================================================
-      # 5. EJECUTAR PROGRAMA
+      # GENERAR RSS
       # ============================================================
-      - name: Generar RSS
+
+      - name: Generar RSS CNMV
+
         if: steps.horario.outputs.ejecutar == 'si'
+
+        env:
+
+          PYTHONUNBUFFERED: "1"
+
         run: |
+
           python main.py --keep_days 5
 
 
       # ============================================================
-      # 6. COMPROBAR RSS
+      # COMPROBAR QUE FEED.XML SE HA GENERADO
       # ============================================================
-      - name: Comprobar feed.xml
-        if: steps.horario.outputs.ejecutar == 'si'
-        run: |
-          if [ ! -f feed.xml ]; then
-            echo "ERROR: main.py no ha generado feed.xml"
-            exit 1
-          fi
 
-          echo "feed.xml generado correctamente"
-          echo "Tamaño:"
+      - name: Comprobar feed.xml
+
+        if: steps.horario.outputs.ejecutar == 'si'
+
+        run: |
+
+          test -f feed.xml || {
+            echo "ERROR: no se ha generado feed.xml"
+            exit 1
+          }
+
+
+          echo "=========================================="
+
+          echo "FEED GENERADO"
+
+          echo "=========================================="
+
+
+          echo "Tamaño de feed.xml:"
+
           ls -lh feed.xml
 
-          echo "Número de items:"
+
+          echo ""
+
+          echo "Número de items RSS:"
+
           grep -c "<item>" feed.xml || true
 
 
+          echo ""
+
+          echo "Últimas fechas presentes:"
+
+          grep -oE '[0-9]{2}/[0-9]{2}/[0-9]{4}' feed.xml \
+          | sort -u -r \
+          | head -10 \
+          || true
+
+
       # ============================================================
-      # 7. GUARDAR CAMBIOS
+      # MOSTRAR CAMBIOS
       # ============================================================
-      - name: Guardar cambios
+
+      - name: Mostrar cambios detectados
+
         if: steps.horario.outputs.ejecutar == 'si'
+
+        run: |
+
+          echo "=========================================="
+
+          echo "CAMBIOS DETECTADOS"
+
+          echo "=========================================="
+
+
+          git status --short
+
+
+          git diff --stat || true
+
+
+      # ============================================================
+      # GUARDAR CAMBIOS
+      # ============================================================
+
+      - name: Guardar cambios
+
+        if: steps.horario.outputs.ejecutar == 'si'
+
+        shell: bash
+
         run: |
 
           git config user.name "github-actions[bot]"
+
           git config user.email \
           "41898282+github-actions[bot]@users.noreply.github.com"
 
+
           git add feed.xml
 
+
           if [ -d resultados ]; then
+
             git add resultados/
+
           fi
+
 
           if git diff --cached --quiet; then
 
-            echo "======================================"
-            echo "NO HAY CAMBIOS EN LA CNMV"
-            echo "======================================"
+            echo "=========================================="
 
-          else
+            echo "NO HAY CAMBIOS QUE GUARDAR"
 
-            echo "======================================"
-            echo "HAY CAMBIOS - ACTUALIZANDO RSS"
-            echo "======================================"
+            echo "=========================================="
 
-            git status
-
-            git commit -m "Actualizar RSS CNMV $(TZ=Europe/Madrid date '+%d-%m-%Y %H:%M')"
-
-            git pull --rebase origin main
-
-            git push origin main
+            exit 0
 
           fi
+
+
+          echo "=========================================="
+
+          echo "NUEVOS DATOS CNMV DETECTADOS"
+
+          echo "=========================================="
+
+
+          git status
+
+
+          git commit \
+          -m "Actualizar RSS CNMV $(TZ=Europe/Madrid date '+%d-%m-%Y %H:%M')"
+
+
+          git pull \
+          --rebase \
+          origin \
+          "${GITHUB_REF_NAME}"
+
+
+          git push \
+          origin \
+          "HEAD:${GITHUB_REF_NAME}"
