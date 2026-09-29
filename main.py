@@ -1552,7 +1552,8 @@ def _extract_ps_rows_from_one_table(
         )
 
     return out
-    def extract_ps_rows_from_html(ps_soup: BeautifulSoup, base_url: str):
+
+def extract_ps_rows_from_html(ps_soup: BeautifulSoup, base_url: str):
     """
     Lee TODAS las tablas de participaciones de la página, incluida la tabla
     'OTRAS NOTIFICACIONES (1)'. La versión anterior solo utilizaba find('table').
@@ -2744,7 +2745,8 @@ def extract_text_first_pages(
             parts.append(t)
 
     return "\n".join(parts)
-    def extract_ac_pdf(pdf_bytes: bytes):
+
+def extract_ac_pdf(pdf_bytes: bytes):
 
     with pdfplumber.open(
         BytesIO(pdf_bytes)
