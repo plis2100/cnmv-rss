@@ -4935,6 +4935,71 @@ def render_rss(
             return dt.date.min
  
     # ========================================================
+    # DEDUPLICACION GLOBAL ANTES DE PUBLICAR
+    # Una misma notificacion puede llegar desde varias tablas,
+    # listados diarios e historicos. No usar la URL como identidad:
+    # el mismo documento puede tener enlaces diferentes.
+    # ========================================================
+    def canonical_text(value):
+        return normalize_holder_name(str(value or ""))
+
+    def canonical_percentage(value):
+        number = parse_number(value)
+        if number is None:
+            return canonical_text(value)
+        return f"{number:.6f}"
+
+    unique_entries = {}
+    duplicate_count = 0
+
+    for entry in entries:
+        date_str, title, description, link, stable_key = entry
+        parts = stable_key.split("|")
+        kind = parts[0] if parts else ""
+        if kind == "PS" and len(parts) >= 6:
+            # Tipo, emisor, titular, fecha y porcentaje actual.
+            identity = (
+                "PS", canonical_text(parts[1]),
+                canonical_text(parts[2]), parts[3],
+                canonical_percentage(parts[4])
+            )
+        elif kind == "AC" and len(parts) >= 5:
+            identity = (
+                "AC", canonical_text(parts[1]), parts[2],
+                canonical_percentage(parts[3])
+            )
+        else:
+            identity = (kind, canonical_text(title), date_str)
+
+        # El GUID depende de la notificacion, no de la URL ni
+        # de la informacion historica que pueda enriquecerse.
+        fixed_key = "|".join(identity)
+        candidate = (date_str, title, description, link, fixed_key)
+
+        # Preferir la version con porcentaje anterior y cambio.
+        # En caso de empate, preferir la descripcion mas completa.
+        def quality(item):
+            t, d, url = item[1], item[2], item[3]
+            return (
+                int("ANTERIOR: No disponible" not in t
+                    and "ANTERIOR:" in t),
+                int("CAMBIO: No disponible" not in t),
+                len(d),
+                int("verdocumento" in url.lower()),
+            )
+
+        if identity in unique_entries:
+            duplicate_count += 1
+            if quality(candidate) > quality(unique_entries[identity]):
+                unique_entries[identity] = candidate
+        else:
+            unique_entries[identity] = candidate
+
+    entries = list(unique_entries.values())
+    print(f"RSS: {len(entries)} entradas unicas; "
+          f"{duplicate_count} duplicados descartados")
+
+    # ========================================================
     # GENERAR ITEMS RSS
     # ========================================================
  
