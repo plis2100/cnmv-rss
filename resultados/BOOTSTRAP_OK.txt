@@ -1,4 +1,4 @@
 Bootstrap OK
 CWD=/home/runner/work/cnmv-rss/cnmv-rss
 OUTDIR=/home/runner/work/cnmv-rss/cnmv-rss/resultados
-TIME=2026-10-23T18:54:11.684560
+TIME=2026-10-26T10:48:18.793138
